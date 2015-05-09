@@ -1,0 +1,33 @@
+{
+  "name": "node-prelaunch",
+  "description": "A prelaunch app to capture early sign ups, written in node.",
+  "website": "https://github.com/eddywashere/node-prelaunch",
+  "repository": "https://github.com/eddywashere/node-prelaunch",
+  "logo": "https://raw.githubusercontent.com/eddywashere/node-prelaunch/master/public/images/logo.png",
+  "keywords": ["mailgun", "email", "prelaunch", "node", "signup", "form"],
+  "env": {
+    "APP_NAME": {
+      "description": "Title For Your Landing Page",
+      "value": "Prelaunch App Name Here"
+    },
+    "MAILGUN_API_KEY": {
+      "description": "Your Mailgun API Key (available from your control panel https://mailgun.com/cp)",
+      "required": true
+    },
+    "MAILGUN_DOMAIN": {
+      "description": "Your Mailgun Domain (custom or sandbox domain available from your control panel https://mailgun.com/cp)",
+      "required": true
+    },
+    "MAILGUN_REPLY_EMAIL": {
+      "description": "The no-reply email address you'd like to use.",
+      "value": "noreply@node-prelaunch.herokuapp.com"
+    },
+    "GOOGLE_ANALYTICS": {
+      "description": "Google Analytics ID"
+    },
+    "NODE_ENV": {
+      "value": "production"
+    }
+  },
+  "addons": ["mongolab"]
+}

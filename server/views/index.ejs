@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+  </head>
+
+  <body ng-controller="MainCtrl" ng-cloak>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+
+          <div class="inner cover">
+
+            <div class="content">
+              <p><img class="logo" src="/images/logo.svg" alt="logo"></p>
+              <h1 class="cover-heading"><%= title %></h1>
+              <% if (locals.confirmed) { %>
+                <p class="lead lead-extra"><strong>You've been confirmed!!!</strong> <br>Thanks for youre interest. You'll hear back from us when there's something ready to try out <3</p>
+              <% } else { %>
+                <p class="lead">Launching soon, sign up to get early access!</p>
+                <% if (locals.error) { %>
+                <div class="alert alert-warning" role="alert" ng-hide="hide">
+                <button type="button" class="close" ng-click="hide=true" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <%- error %>
+                </div>
+                <% } %>
+              <% } %>
+            </div>
+            <% if (!locals.confirmed) { %>
+              <div class="signup-form">
+                <div class="input-group input-group-md" ng-class="{'has-error': formError}">
+                  <input type="email" class="form-control" ng-model="email" ng-disabled="submitted">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" ng-click="submit()" ng-disabled="submitted">SIGN UP</button>
+                  </span>
+                </div>
+                <div class="alert alert-info" role="alert" ng-if="formSuccess">
+                  Sweet! Please check your inbox and click on the confirmation link.
+                </div>
+                <div class="alert alert-warning" role="alert" ng-if="formError">
+                  {{errorMsg}}
+                </div>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p><a href="https://github.com/eddywashere/node-prelaunch">github.com/eddywashere/node-prelaunch</a></p>
+              <p>brought to you by <a href="https://twitter.com/eddywashere">@eddywashere</a></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script src="/javascripts/script.js"></script>
+    <% if (locals.googleAnalytics) { %>
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '<%= locals.googleAnalytics %>', 'auto');
+        ga('send', 'pageview');
+      </script>
+    <% } %>
+  </body>
+</html>
