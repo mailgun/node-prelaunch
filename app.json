@@ -23,7 +23,8 @@
       "value": "noreply@node-prelaunch.herokuapp.com"
     },
     "GOOGLE_ANALYTICS": {
-      "description": "Google Analytics ID"
+      "description": "Google Analytics ID",
+      "required": false
     },
     "NODE_ENV": {
       "value": "production"
