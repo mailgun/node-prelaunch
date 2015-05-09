@@ -12,3 +12,30 @@ Icon from [sketchappsources.com](http://www.sketchappsources.com/free-source/778
 
 HTML/CSS mostly from [twbs/bootstrap](https://github.com/twbs/bootstrap/tree/2084791511182db5cb7c3a2b3d9b35bddabb5eed/docs/examples/cover) cover template.
 
+### System Requirements
+
+- mongodb
+- nodejs
+- [Mailgun](https://mailgun.com) account
+
+### Getting Started
+
+First update `/server/config/secrets.js` with the following credentials:
+
+- [Mailgun](https://mailgun.com) for sending sign up confirmations.
+- google analytics id
+
+Install dependencies:
+
+```
+npm install
+```
+
+Make sure mongodb is running (`mongod`) then start the node server
+
+```
+node server
+
+```
+
+
