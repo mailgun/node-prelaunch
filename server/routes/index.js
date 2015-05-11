@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var crypto = require('crypto');
 var User = require('../models/user');
 var secrets = require('../config/secrets');
-var async = require('async');
 var sendEmail = require('../email/index').sendEmail;
 
 // landing page
@@ -19,16 +17,19 @@ router.get('/', function(req, res, next) {
 });
 
 // confirmation page
-router.get('/confirm/:token*?', function(req, res, next) {
-  if(req.params.token){
-    User.validateConfirmationToken(req.params.token, function(err){
+router.get('/signup/confirm', function(req, res, next) {
+  if(req.query.u && req.query.t){
+    User.validateConfirmation(req.query.u, req.query.t, function(err){
       if (err) {
         res.render('index', {
           title: 'Prelaunch App',
           error: 'This confirmation token is invalid or has expired.'
         });
       } else {
-        res.redirect('/?confirmed=true');
+        res.render('index', {
+          title: 'Prelaunch App',
+          confirmed: true
+        });
       }
     });
   } else {
@@ -43,20 +44,20 @@ router.post('/signup', function(req, res, next) {
   var errors = req.validationErrors();
 
   if (errors) {
-    res.status(400).send(errors);
-  } else {
-    User.createFromSignup({email: req.body.email}, function(err, user){
+    return res.status(400).send(errors);
+  }
+
+  User.createFromSignup({email: req.body.email}, function(err, user){
+    if (err) {
+      return res.status(err.status || 500).send([{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]);
+    }
+    sendEmail(req, user, function(err){
       if (err) {
         return res.status(500).send([{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]);
       }
-      sendEmail(req, user, function(err){
-        if (err) {
-          return res.status(500).send([{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]);
-        }
-        return res.status(200).send([{msg: 'Woot! Thanks for signing up!!!'}]);
-      });
+      return res.status(200).send([{msg: 'Woot! Thanks for signing up!!!'}]);
     });
-  }
+  });
 });
 
 module.exports = router;

@@ -1,87 +1,42 @@
 var mongoose = require('mongoose');
 var secrets = require('../config/secrets');
 var timestamps = require('mongoose-timestamp');
+var confirmable = require('./helpers/confirmable');
 var crypto = require('crypto');
 
 var userSchema = new mongoose.Schema({
-  email: { type: String, unique: true, lowercase: true },
-
-  confirmedAt: Date,
-  confirmationTokenExpires: Date,
-  confirmationToken: String
+  email: { type: String, unique: true, lowercase: true }
 });
 
 userSchema.plugin(timestamps);
+
+// confirmation never expires (in minutes)
+userSchema.plugin(confirmable, {expires: 0, maxAttempts: 5});
 
 userSchema.statics.createFromSignup = function(data, cb) {
   var User = this;
 
   return User.findOne({ email: data.email }, function(err, existingUser) {
-    if (existingUser) {
-      return cb({msg: 'An account with that email address already exists.'});
+    if (existingUser && existingUser.confirmation.validatedAt) {
+      return cb({msg: "You're already signed up", status: 400});
+    }
+    if(existingUser && existingUser.confirmation.count >= 3) {
+      if(existingUser.confirmation.initiatedAt > Date.now() - (60000 * 30)){
+        return cb({msg: "Slow down there. Check your inbox for the previously sent emails.", status: 400});
+      }
     }
     // edit this portion to accept other properties when creating a user.
-    var user = new User({
+    var user = existingUser || new User({
       email: data.email
     });
 
-    user.setConfirmationToken(function(err){
+    user.setConfirmation(function(err){
       if (err) {
-        cb({msg: "Apologies but we're unable to sign you up at this time."});
+        cb({msg: "Apologies but we're unable to sign you up at this time.", status: 500});
       } else {
         cb(null, user);
       }
     });
-  });
-};
-
-userSchema.statics.validateConfirmationToken = function (token, cb) {
- return this.findOne({ confirmationToken: token })
-    .where('confirmationTokenExpires').gt(Date.now())
-    .exec(function(err, user) {
-      if(err){
-        return cb(err);
-      }
-      if (!user) {
-        return cb('user_not_found');
-      }
-
-      return user.removeConfirmationToken(cb);
-    });
-};
-
-userSchema.methods.setConfirmationToken = function (cb) {
-  var user = this;
-
-  crypto.randomBytes(24, function(err, buf) {
-    var token = buf.toString('hex');
-
-    user.confirmationToken = token;
-    user.confirmationTokenExpires = Date.now() + 3600000 * 3; // 3 hrs
-
-    user.save(function (err) {
-      if(err){
-        return cb(err);
-      } else {
-        return cb();
-      }
-    });
-  });
-};
-
-userSchema.methods.removeConfirmationToken = function (cb) {
-  var user = this;
-
-  user.confirmedAt = Date.now();
-  user.confirmationTokenExpires = null;
-  user.confirmationToken = null;
-
-  user.save(function (err) {
-    if(err){
-      return cb(err);
-    } else {
-      return cb(null);
-    }
   });
 };
 

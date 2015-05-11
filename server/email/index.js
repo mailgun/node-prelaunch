@@ -3,12 +3,14 @@ var nodemailer = require('nodemailer');
 var mailgunApiTransport = require('nodemailer-mailgunapi-transport');
 
 function sendEmail(req, user, cb){
-  var confirmationLink;
+  var confirmationLink = req.headers.host +
+    '/signup/confirm?u=' + user.confirmation.id +
+    '&t=' + user.confirmation.token;
 
   if(secrets.env !== 'production'){
-    confirmationLink = 'http://' + req.headers.host + '/confirm/' + user.confirmationToken;
+    confirmationLink = 'http://' + confirmationLink;
   } else {
-    confirmationLink = 'https://' + req.headers.host + '/confirm/' + user.confirmationToken;
+    confirmationLink = 'https://' + confirmationLink;
   }
 
   var transporter = nodemailer.createTransport(
