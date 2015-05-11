@@ -28,6 +28,7 @@
     "express": "~4.11.1",
     "express-validator": "^2.10.0",
     "lodash": "^3.8.0",
+    "mailgun-validate-email": "^2.0.1",
     "mongoose": "^4.0.2",
     "mongoose-timestamp": "^0.3.0",
     "morgan": "~1.5.1",
