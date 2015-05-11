@@ -30,6 +30,7 @@ function sendEmail(req, user, cb){
 
   if(secrets.env !== 'production'){
     console.log(confirmationLink);
+    cb(null);
   } else {
     transporter.sendMail(mailOptions, cb);
   }
