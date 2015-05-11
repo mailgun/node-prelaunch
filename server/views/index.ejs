@@ -40,11 +40,11 @@
               <% } %>
             </div>
             <% if (!locals.confirmed) { %>
-              <div class="signup-form">
+              <form class="signup-form" ng-submit="submit()">
                 <div class="input-group input-group-md" ng-class="{'has-error': formError}">
                   <input type="email" class="form-control" ng-model="email" ng-disabled="submitted">
                   <span class="input-group-btn">
-                    <button class="btn btn-danger" type="button" ng-click="submit()" ng-disabled="submitted">SIGN UP</button>
+                    <button class="btn btn-danger" type="submit" ng-disabled="submitted">SIGN UP</button>
                   </span>
                 </div>
                 <div class="alert alert-info" role="alert" ng-if="formSuccess">
@@ -53,7 +53,7 @@
                 <div class="alert alert-warning" role="alert" ng-if="formError">
                   {{errorMsg}}
                 </div>
-              </div>
+              </form>
             <% } %>
           </div>
 
