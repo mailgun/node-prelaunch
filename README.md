@@ -1,4 +1,4 @@
-![screenshot](https://cloud.githubusercontent.com/assets/399776/7552344/e4874bf8-f663-11e4-803b-bff9346f5607.png)
+<a href="https://node-prelaunch.herokuapp.com"><img src="https://cloud.githubusercontent.com/assets/399776/7552344/e4874bf8-f663-11e4-803b-bff9346f5607.png" width="100%" alt="screenshot"></a>
 
 # node-prelaunch
 
@@ -22,7 +22,7 @@ HTML/CSS mostly from [twbs/bootstrap](https://github.com/twbs/bootstrap/tree/208
 
 First update `/server/config/secrets.js` with the following credentials:
 
-- [Mailgun](https://mailgun.com) for sending sign up confirmations.
+- [Mailgun](https://mailgun.com) for sending sign up confirmations and validating email addresses
 - google analytics id
 
 Install dependencies:
@@ -36,5 +36,7 @@ Make sure mongodb is running (`mongod`) then start the node server
 ```
 node server
 ```
+
+NOTE: In development mode, the confirmation link is not mailed out, it is output to the console logs.
 
 
