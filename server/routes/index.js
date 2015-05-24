@@ -4,7 +4,7 @@ var async = require('async');
 
 var User = require('../models/user');
 var secrets = require('../config/secrets');
-var sendEmail = require('../email/index').sendEmail;
+var sendEmail = require('../email/index').send;
 var mgValidator;
 
 if(secrets.mailgun.public){
@@ -40,13 +40,26 @@ router.get('/signup/confirm*', function(req, res, next) {
     function(userId, token, done){
       User.validateConfirmation(userId, token, function(err, user){
         if(err && err.msg === 'user_already_validated'){
-          done(null);
+          done(null, null);
         } else if(user) {
-          done(null);
+          done(null, user);
         } else {
           done({msg:'Invalid Credentials', status: 400});
         }
       });
+    },
+    function(user, done){
+      if(user){
+        var data = {};
+        data.template = 'verified';
+        data.subject = 'Node Prelaunch: Sign Up Confirmed';
+        data.email = user.email;
+
+        sendEmail(data, done);
+      } else {
+        // user already validated
+        done(null);
+      }
     }
   ],
   function(err){
@@ -91,7 +104,22 @@ router.post('/signup', function(req, res, next) {
       User.createFromSignup({email: req.body.email}, done);
     },
     function(user, done){
-      sendEmail(req, user, done);
+      var data = {};
+      data.confirmationLink = req.headers.host +
+        '/signup/confirm?u=' + user.confirmation.id +
+        '&t=' + user.confirmation.token;
+
+      if(secrets.env !== 'production'){
+        data.confirmationLink = 'http://' + data.confirmationLink;
+      } else {
+        data.confirmationLink = 'https://' + data.confirmationLink;
+      }
+      console.log(data.confirmationLink);
+      data.template = 'confirmation';
+      data.subject = 'Node Prelaunch: Confirm Sign Up';
+      data.email = user.email;
+
+      sendEmail(data, done);
     }
   ],
   function(err, results){

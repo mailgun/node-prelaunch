@@ -1,41 +1,43 @@
-var secrets = require('../config/secrets');
+var path = require('path');
+var EmailTemplate = require('email-templates').EmailTemplate;
 var nodemailer = require('nodemailer');
+var async = require('async');
+var secrets = require('../config/secrets');
+
+var templatesDir = path.resolve(__dirname, '../email');
+
 var mailgunApiTransport = require('nodemailer-mailgunapi-transport');
+var transport = nodemailer.createTransport(
+  mailgunApiTransport({
+    apiKey: secrets.mailgun.api,
+    domain: secrets.mailgun.domain
+  })
+);
 
-function sendEmail(req, user, cb){
-  var confirmationLink = req.headers.host +
-    '/signup/confirm?u=' + user.confirmation.id +
-    '&t=' + user.confirmation.token;
+// An example users object with formatted email function
 
-  if(secrets.env !== 'production'){
-    confirmationLink = 'http://' + confirmationLink;
-  } else {
-    confirmationLink = 'https://' + confirmationLink;
-  }
+function send(locals, cb){
+  var template = new EmailTemplate(path.join(templatesDir, locals.template));
 
-  var transporter = nodemailer.createTransport(
-    mailgunApiTransport({
-      apiKey: secrets.mailgun.api,
-      domain: secrets.mailgun.domain
-    })
-  );
+  template.render(locals, function (err, results) {
+    if (err) {
+      return cb(err);
+    }
 
-  var mailOptions = {
-    to: user.email,
-    from: secrets.mailgun.email,
-    subject: 'Confirm your sign up for node-prelaunch.herokuapp.com',
-    text: 'You are receiving this email because you (or someone else) has requested to be signed up for node-prelaunch.herokuapp.com.\n\n' +
-      'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-      confirmationLink + '\n\n' +
-      "If you did not request this, feel free to ignore this email or delete it.\n"
-  };
-
-  if(secrets.env !== 'production'){
-    console.log(confirmationLink);
-    cb(null);
-  } else {
-    transporter.sendMail(mailOptions, cb);
-  }
+    transport.sendMail({
+      from: 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>',
+      to: locals.email,
+      subject: locals.subject,
+      html: results.html,
+      text: results.text
+    }, function (err, responseStatus) {
+      if (err) {
+        return cb(err);
+      }
+      cb(null);
+    });
+  });
 }
 
-module.exports = { sendEmail: sendEmail };
+
+module.exports = { send: send };
