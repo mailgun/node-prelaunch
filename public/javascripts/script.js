@@ -27,8 +27,8 @@ angular.module('app', []).controller('MainCtrl', function($scope, $http) {
       $scope.submitted = true;
       $scope.formSuccess = true;
     }).error(function(data, status, headers){
-      if(data.length && data[0].msg){
-        $scope.errorMsg = data[0].msg;
+      if(data.errors && data.errors[0].msg){
+        $scope.errorMsg = data.errors[0].msg;
       } else {
         $scope.errorMsg = 'Houston, We Have A Uh-Oh';
       }

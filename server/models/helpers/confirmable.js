@@ -38,18 +38,18 @@ var confirmable = function(schema, options){
         return cb(err);
       }
       if(!user){
-        cb('user_not_found');
+        cb({msg: 'user_not_found', status: 404});
       }
       if(user.confirmation.validatedAt){
-        return cb(null);
+        return cb({msg: 'user_already_validated', status: 400});
       }
 
       user.confirmation.validatedAt = Date.now();
       user.save(function (err) {
         if(err){
-          return cb(err);
+          return cb({msg: "user_error_updating", status: 500});
         } else {
-          return cb(null);
+          return cb(null, user);
         }
       });
     });
@@ -68,7 +68,7 @@ var confirmable = function(schema, options){
         return cb(err);
       }
       if (!user) {
-        return cb('not_found');
+        return cb({msg: 'user_not_found', status: 404});
       }
 
       return cb(null, user);

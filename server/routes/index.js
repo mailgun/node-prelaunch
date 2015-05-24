@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 
 var User = require('../models/user');
 var secrets = require('../config/secrets');
@@ -27,54 +28,79 @@ router.get('/', function(req, res, next) {
 });
 
 // confirmation page
-router.get('/signup/confirm', function(req, res, next) {
-  if(req.query.u && req.query.t){
-    User.validateConfirmation(req.query.u, req.query.t, function(err){
-      if (err) {
-        res.render('index', {
-          title: 'Prelaunch App',
-          error: 'This confirmation token is invalid or has expired.'
-        });
+router.get('/signup/confirm*', function(req, res, next) {
+  async.waterfall([
+    function(done){
+      if(req.query.u && req.query.t){
+        done(null, req.query.u, req.query.t);
       } else {
-        res.render('index', {
-          title: 'Prelaunch App',
-          confirmed: true
-        });
+        return res.redirect('/');
       }
-    });
-  } else {
-    res.redirect('/');
-  }
+    },
+    function(userId, token, done){
+      User.validateConfirmation(userId, token, function(err, user){
+        if(err && err.msg === 'user_already_validated'){
+          done(null);
+        } else if(user) {
+          done(null);
+        } else {
+          done({msg:'Invalid Credentials', status: 400});
+        }
+      });
+    }
+  ],
+  function(err){
+    if(err) {
+      res.render('index', {
+        title: 'Prelaunch App',
+        error: "This confirmation token is invalid or has expired."
+      });
+    } else {
+      res.render('index', {
+        title: 'Prelaunch App',
+        confirmed: true
+      });
+    }
+  });
 });
 
 // accept post to sign up
 router.post('/signup', function(req, res, next) {
-  req.assert('email', 'Please sign up with a valid email <3').isEmail();
-
-  var errors = req.validationErrors();
-
-  if (errors) {
-    return res.status(400).send(errors);
-  }
-
-  // catch low hanging fruit
-  mgValidator(req.body.email, function (err, result){
-    if(err) {
-      return res.status(400).send([{msg: "Apologies but we're unable to sign you up at this time."}]);
-    } else if (result && !result.is_valid){
-      return res.status(400).send([{msg:'Please sign up with a valid email <3'}]);
-     } else {
-      User.createFromSignup({email: req.body.email}, function(err, user){
+  async.waterfall([
+    function(done){
+      // quick email validation
+      req.assert('email', 'Please sign up with a valid email <3').isEmail();
+      done(req.validationErrors());
+    },
+    function(done){
+      // mailgun email validation
+      mgValidator(req.body.email, function(err, results){
         if (err) {
-          return res.status(err.status || 500).send([{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]);
+          // api might be down, fallback to just prev email validation
+          console.log(err);
+          return done(null);
         }
-        sendEmail(req, user, function(err){
-          if (err) {
-            return res.status(500).send([{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]);
-          }
-          return res.status(200).send([{msg: 'Woot! Thanks for signing up!!!'}]);
-        });
+        if(results.is_valid){
+          done(null);
+        } else {
+          done({msg:'Please sign up with a valid email <3', status: 400});
+        }
       });
+    },
+    function(done){
+      User.createFromSignup({email: req.body.email}, done);
+    },
+    function(user, done){
+      sendEmail(req, user, done);
+    }
+  ],
+  function(err, results){
+    if(err && err.length){
+      res.status(400).send({errors: err});
+    } else if(err){
+      res.status(err.status || 500).send({errors: [{msg: err.msg || "Apologies but we're unable to sign you up at this time."}]});
+    } else {
+      res.status(200).send([{msg: 'Woot! Thanks for signing up!!!'}]);
     }
   });
 });
