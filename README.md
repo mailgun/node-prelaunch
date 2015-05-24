@@ -8,6 +8,8 @@ Live Demo: [node-prelaunch.herokuapp.com](https://node-prelaunch.herokuapp.com)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+Responsive transactional HTML email templates from [mailgun/transactional-email-templates](https://github.com/mailgun/transactional-email-templates)
+
 Icon from [sketchappsources.com](http://www.sketchappsources.com/free-source/778-flat-rocket-sketch-freebie-resource.html).
 
 HTML/CSS mostly from [twbs/bootstrap](https://github.com/twbs/bootstrap/tree/2084791511182db5cb7c3a2b3d9b35bddabb5eed/docs/examples/cover) cover template.

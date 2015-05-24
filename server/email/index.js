@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var EmailTemplate = require('email-templates').EmailTemplate;
 var nodemailer = require('nodemailer');
@@ -14,10 +15,21 @@ var transport = nodemailer.createTransport(
   })
 );
 
-// An example users object with formatted email function
+var templates = {};
+
+// load templates once
+fs.readdirSync(templatesDir).forEach(function(file) {
+  if(fs.statSync(path.join(templatesDir, file)).isDirectory()){
+    templates[file] = new EmailTemplate(path.join(templatesDir, file));
+  }
+});
 
 function send(locals, cb){
-  var template = new EmailTemplate(path.join(templatesDir, locals.template));
+  var template = templates[locals.template];
+
+  if(!template){
+    return cb({msg: 'Template not found', status: 500});
+  }
 
   template.render(locals, function (err, results) {
     if (err) {

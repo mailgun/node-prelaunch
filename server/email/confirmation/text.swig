@@ -5,4 +5,4 @@ Confirm email address ({{confirmationLink}})
 - Node Prelaunch App
 
 
-Didn't sign up for this? Click Here To Unsubscribe (%unsubscribe_url%)
+Don't like these annoying emails? (%unsubscribe_url%)
