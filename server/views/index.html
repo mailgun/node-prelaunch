@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/images/favicon.ico">
-    <title><%= title %></title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href="/stylesheets/style.css" rel="stylesheet">
   </head>
@@ -26,20 +26,20 @@
 
             <div class="content">
               <p><img class="logo" src="/images/logo.svg" alt="logo"></p>
-              <h1 class="cover-heading"><%= title %></h1>
-              <% if (locals.confirmed) { %>
+              <h1 class="cover-heading">{{ title }}</h1>
+              {% if (locals.confirmed) %}
                 <p class="lead lead-extra"><strong>You've been confirmed!!!</strong> <br>Thanks for your interest. You'll hear back from us when there's something ready to try out <3</p>
-              <% } else { %>
+              {% else %}
                 <p class="lead">Launching soon, sign up to get early access!</p>
-                <% if (locals.error) { %>
+                {% if (locals.error) %}
                 <div class="alert alert-warning" role="alert" ng-hide="hide">
                 <button type="button" class="close" ng-click="hide=true" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <%- error %>
+                  {{- error }}
                 </div>
-                <% } %>
-              <% } %>
+                {% endif %}
+              {% endif %}
             </div>
-            <% if (!locals.confirmed) { %>
+            {% if (!locals.confirmed) %}
               <form class="signup-form" ng-submit="submit()">
                 <div class="input-group input-group-md" ng-class="{'has-error': formError}">
                   <input type="email" class="form-control" ng-model="email" ng-disabled="submitted">
@@ -54,7 +54,7 @@
                   {{errorMsg}}
                 </div>
               </form>
-            <% } %>
+            {% endif %}
           </div>
 
           <div class="mastfoot">
@@ -72,16 +72,16 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
     <script src="/javascripts/script.js"></script>
-    <% if (locals.googleAnalytics) { %>
+    {% if (locals.googleAnalytics) %}
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '<%= locals.googleAnalytics %>', 'auto');
+        ga('create', '{{ locals.googleAnalytics }}', 'auto');
         ga('send', 'pageview');
       </script>
-    <% } %>
+    {% endif %}
   </body>
 </html>
