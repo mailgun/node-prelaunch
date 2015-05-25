@@ -1,5 +1,6 @@
 var secrets = require('./config/secrets');
 var express = require('express');
+var swig = require('swig');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -25,9 +26,12 @@ if (secrets.env === 'production') {
 
 app.locals.googleAnalytics = secrets.googleAnalytics || false;
 
+swig.setDefaults({ cache: false });
+
 // view engine setup
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
