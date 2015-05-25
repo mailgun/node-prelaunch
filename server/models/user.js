@@ -40,4 +40,16 @@ userSchema.statics.createFromSignup = function(data, cb) {
   });
 };
 
+userSchema.statics.findConfirmed = function(values, cb) {
+  var User = this;
+
+  return User.find({'confirmation.validatedAt': {$gt: new Date(0)}}, values, function(err, users){
+    if (err) {
+      cb({msg: "Error finding users", status: 500});
+    } else {
+      cb(null, users);
+    }
+  });
+};
+
 module.exports = mongoose.model('User', userSchema);

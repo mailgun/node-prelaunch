@@ -59,5 +59,24 @@ function send(locals, cb){
   });
 }
 
+function batch(locals, emailList, cb){
+  var emailChunks = _.chunk(emailList, 1000);
 
-module.exports = { send: send };
+  async.each(emailChunks, function(list, done) {
+    var emailProp = locals.emailProp || 'email';
+    var data = {
+      email: _.pluck(list, emailProp),
+      from: locals.from,
+      subject: locals.subject,
+      template: locals.template,
+      'recipient-variables': _.indexBy(list, emailProp)
+    };
+
+    send(data, done);
+  }, function(err){
+      cb(err);
+  });
+}
+
+
+module.exports = { send: send, batch: batch };
