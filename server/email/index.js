@@ -4,16 +4,17 @@ var EmailTemplate = require('email-templates').EmailTemplate;
 var nodemailer = require('nodemailer');
 var async = require('async');
 var secrets = require('../config/secrets');
+var _ = require('lodash');
+var mg = require('nodemailer-mailgun-transport');
 
 var templatesDir = path.resolve(__dirname, '../email');
 
-var mailgunApiTransport = require('nodemailer-mailgunapi-transport');
-var transport = nodemailer.createTransport(
-  mailgunApiTransport({
-    apiKey: secrets.mailgun.api,
+var transport = nodemailer.createTransport(mg({
+  auth: {
+    api_key: secrets.mailgun.api,
     domain: secrets.mailgun.domain
-  })
-);
+  }
+}));
 
 var templates = {};
 
@@ -25,6 +26,7 @@ fs.readdirSync(templatesDir).forEach(function(file) {
 });
 
 function send(locals, cb){
+  var data = {};
   var template = templates[locals.template];
 
   if(!template){
@@ -36,13 +38,19 @@ function send(locals, cb){
       return cb(err);
     }
 
-    transport.sendMail({
-      from: 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>',
+    data = {
+      from: locals.from,
       to: locals.email,
       subject: locals.subject,
       html: results.html,
       text: results.text
-    }, function (err, responseStatus) {
+    };
+
+    if(locals['recipient-variables']) {
+      data['recipient-variables'] = locals['recipient-variables'];
+    }
+
+    transport.sendMail(data, function (err, responseStatus) {
       if (err) {
         return cb(err);
       }

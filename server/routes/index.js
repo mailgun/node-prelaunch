@@ -51,6 +51,7 @@ router.get('/signup/confirm*', function(req, res, next) {
     function(user, done){
       if(user){
         var data = {};
+        data.from = 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>';
         data.template = 'verified';
         data.subject = 'Node Prelaunch: Sign Up Confirmed';
         data.email = user.email;
@@ -105,6 +106,7 @@ router.post('/signup', function(req, res, next) {
     },
     function(user, done){
       var data = {};
+      data.from = 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>';
       data.confirmationLink = req.headers.host +
         '/signup/confirm?u=' + user.confirmation.id +
         '&t=' + user.confirmation.token;
