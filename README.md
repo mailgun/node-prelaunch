@@ -39,6 +39,24 @@ Make sure mongodb is running (`mongod`) then start the node server
 node server
 ```
 
-NOTE: In development mode, the confirmation link is not mailed out, it is output to the console logs.
+### Prelaunch Sign Up Flow
 
+- A user signs up on the site
+- a confirmation email is sent - [image](https://cloud.githubusercontent.com/assets/399776/7790511/1ff89498-0240-11e5-897e-54dc2b7a3a75.png)
+- the user receives the email and clicks the confirmation link
+- the user is redirected to the site with a unique token and confirmation id
+- if the token and id are valid, the user model is updated and a thank you email is sent - [image](https://cloud.githubusercontent.com/assets/399776/7790518/447cf53e-0240-11e5-86f5-5e5928ccd799.png)
+
+### Sending Post Launch Emails
+
+Need to send an update? An example of querying confirmed users and sending emails in batches can be found in [server/email/batch-demo.js](server/email/batch-demo.js). This uses Mailgun's [batch sending](https://documentation.mailgun.com/user_manual.html#batch-sending) feature.
+
+To send the following [campaign update template](server/email/campaign/html.swig), run the following command. PLEAE NOTE: there is no dry run version of this yet, this command will send out emails to any confirmed users in your user collection.
+
+```
+node server/email/batch-demo.js
+```
+The campaign update email uses the [email alert template](https://github.com/mailgun/transactional-email-templates)
+
+![image](https://cloud.githubusercontent.com/assets/399776/7790493/5faf3ff2-023f-11e5-9874-6c34bae5bda6.png)
 
