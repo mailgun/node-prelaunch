@@ -60,3 +60,26 @@ The campaign update email uses the [email alert template](https://github.com/mai
 
 ![image](https://cloud.githubusercontent.com/assets/399776/7790493/5faf3ff2-023f-11e5-9874-6c34bae5bda6.png)
 
+### Contributing
+
+If you're interested in contributing, please refer to the following project goals before submitting a pr or github issue.
+
+Project Goals
+
+- keep this as a starting point people can fork, redeploy, and persist their database while their app is built out
+- make it easy to send email & track changes in email templates since they are checked into codebase
+- be responsible for user data in database (not in some third party service), this also includes
+    - tracking sign up dates
+    - securing confirmations
+    - keeping track of confirmations
+- use transactional email provider - ex: Mailgun
+- avoid creating something that can spam people and ruin email sending reputation for the owner
+- use double opt in
+- sending batch emails (max 1000 at a time) - ex: Mailgun
+- post launch sending capabilities and integration (ex: send password reset codes when app is launched)
+
+### Todo
+
+- get rid of ejs and default server rendered templates to swig
+- use tags to track transactional emails (`signups` vs `commercial` vs `password resets`)
+- track unsubscribes and remove user from database on unsubscribe (might need to use webhooks)
