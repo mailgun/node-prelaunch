@@ -23,7 +23,7 @@ function sendEmailUpdates(){
       mongoose.disconnect();
     } else {
       email.batch(locals, users, function(err){
-        console.log('Emails Sent!!!');
+        console.log(users.length + ' emails sent!!!');
         mongoose.disconnect();
       });
     }
