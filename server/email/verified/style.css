@@ -129,6 +129,11 @@ p, ul, ol {
   margin-bottom: 10px;
   font-weight: normal;
 }
+
+ul, ol {
+  padding: 0;
+}
+
 p li, ul li, ol li {
   margin-left: 5px;
   list-style-position: inside;
@@ -139,7 +144,7 @@ p li, ul li, ol li {
 ------------------------------------- */
 a {
   color: #348eda;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .btn-primary {
@@ -210,6 +215,9 @@ a {
 }
 .alert.alert-good {
   background-color: #68B90F;
+}
+.alert.alert-info {
+  background-color: #348eda;
 }
 
 /* -------------------------------------
