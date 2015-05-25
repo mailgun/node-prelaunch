@@ -80,6 +80,5 @@ Project Goals
 
 ### Todo
 
-- get rid of ejs and default server rendered templates to swig
+- add flag to batch command for sending in [testmode](https://documentation.mailgun.com/user_manual.html#sending-in-test-mode)
 - use tags to track transactional emails (`signups` vs `commercial` vs `password resets`)
-- track unsubscribes and remove user from database on unsubscribe (might need to use webhooks)
