@@ -51,7 +51,7 @@
                   Sweet! Please check your inbox and click on the confirmation link.
                 </div>
                 <div class="alert alert-warning" role="alert" ng-if="formError">
-                  {{errorMsg}}
+                  {% raw %}{{errorMsg}}{% endraw %}
                 </div>
               </form>
             {% endif %}
