@@ -10,18 +10,6 @@
       "description": "Title For Your Landing Page",
       "value": "Prelaunch App Name Here"
     },
-    "MAILGUN_DOMAIN": {
-      "description": "Your Mailgun Domain (custom or sandbox domain available from your control panel https://mailgun.com/cp)",
-      "required": true
-    },
-    "MAILGUN_API_KEY": {
-      "description": "Your SECRET Mailgun API Key (available from your control panel https://mailgun.com/cp)",
-      "required": true
-    },
-    "MAILGUN_PUBLIC_KEY": {
-      "description": "Your PUBLIC Mailgun API Key (available from your control panel https://mailgun.com/cp)",
-      "required": true
-    },
     "MAILGUN_REPLY_EMAIL": {
       "description": "The no-reply email address you'd like to use.",
       "value": "noreply@node-prelaunch.herokuapp.com"
@@ -34,5 +22,5 @@
       "value": "production"
     }
   },
-  "addons": ["mongolab"]
+  "addons": ["mailgun", "mongolab"]
 }
