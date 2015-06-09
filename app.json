@@ -1,9 +1,9 @@
 {
   "name": "node-prelaunch",
   "description": "A prelaunch app to capture early sign ups, written in node.",
-  "website": "https://github.com/eddywashere/node-prelaunch",
-  "repository": "https://github.com/eddywashere/node-prelaunch",
-  "logo": "https://raw.githubusercontent.com/eddywashere/node-prelaunch/master/public/images/logo.png",
+  "website": "https://github.com/mailgun/node-prelaunch",
+  "repository": "https://github.com/mailgun/node-prelaunch",
+  "logo": "https://raw.githubusercontent.com/mailgun/node-prelaunch/master/public/images/logo.png",
   "keywords": ["mailgun", "email", "prelaunch", "node", "signup", "form"],
   "env": {
     "APP_NAME": {

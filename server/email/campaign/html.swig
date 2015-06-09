@@ -34,12 +34,12 @@
                 </tr>
                 <tr>
                   <td class="content-block">
-                    <a href="https://github.com/eddywashere/node-prelaunch" class="btn-primary">Fork this on Github</a>
+                    <a href="https://github.com/mailgun/node-prelaunch" class="btn-primary">Fork this on Github</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block">
-                    <a href="https://github.com/eddywashere/node-prelaunch">&mdash; Node Prelaunch App</a>
+                    <a href="https://github.com/mailgun/node-prelaunch">&mdash; Node Prelaunch App</a>
                   </td>
                 </tr>
               </table>

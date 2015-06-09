@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
     confirmed = true;
   }
 
-  res.render('index', { title: 'Prelaunch App', confirmed: confirmed });
+  res.render('index', { title: secrets.appName || 'App Title', confirmed: confirmed });
 });
 
 // confirmation page

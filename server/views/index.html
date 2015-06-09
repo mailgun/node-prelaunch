@@ -15,62 +15,82 @@
 
   <body ng-controller="MainCtrl" ng-cloak>
 
-    <div class="site-wrapper">
+    <div class="container">
+      <p><img class="logo" src="/images/logo.svg" alt="logo"></p>
 
-      <div class="site-wrapper-inner">
+      <h1 class="cover-heading">{{ title }}</h1>
 
-        <div class="cover-container">
+      {% if confirmed %}
+        <p class="lead">
+          <strong>You've been confirmed!!!</strong> <br>Thanks for your interest. You'll hear back from us when there's something ready to try out <3
+        </p>
+      {% else %}
+        <p class="lead">
+          Thanks for checking out our example prelaunch site!
+        </p>
+      {% endif %}
 
-
-          <div class="inner cover">
-
-            <div class="content">
-              <p><img class="logo" src="/images/logo.svg" alt="logo"></p>
-              <h1 class="cover-heading">{{ title }}</h1>
-              {% if confirmed %}
-                <p class="lead lead-extra"><strong>You've been confirmed!!!</strong> <br>Thanks for your interest. You'll hear back from us when there's something ready to try out <3</p>
-              {% else %}
-                <p class="lead">Launching soon, sign up to get early access!</p>
-                {% if error %}
-                <div class="alert alert-warning" role="alert" ng-hide="hide">
-                <button type="button" class="close" ng-click="hide=true" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  {{- error }}
-                </div>
-                {% endif %}
-              {% endif %}
-            </div>
-            {% if !confirmed %}
-              <form class="signup-form" ng-submit="submit()">
-                <div class="input-group input-group-md" ng-class="{'has-error': formError}">
-                  <input type="email" class="form-control" ng-model="email" ng-disabled="submitted">
-                  <span class="input-group-btn">
-                    <button class="btn btn-danger" type="submit" ng-disabled="submitted">SIGN UP</button>
-                  </span>
-                </div>
-                <div class="alert alert-info" role="alert" ng-if="formSuccess">
-                  Sweet! Please check your inbox and click on the confirmation link.
-                </div>
-                <div class="alert alert-warning" role="alert" ng-if="formError">
-                  {% raw %}{{errorMsg}}{% endraw %}
-                </div>
-              </form>
-            {% endif %}
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p><a href="https://github.com/eddywashere/node-prelaunch">github.com/eddywashere/node-prelaunch</a></p>
-              <p>brought to you by <a href="https://twitter.com/eddywashere">@eddywashere</a></p>
-            </div>
-          </div>
-
+      {% if error %}
+        <div class="alert alert-warning" role="alert" ng-hide="hide">
+          <button type="button" class="close" ng-click="hide=true" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{- error }}
         </div>
+      {% endif %}
 
+      <p>Deploy this project to gather user interest while you work on building out your product. We've included html email templates for the following email transactions: <a href="">Confirmation</a>, <a href="">Verification</a> &amp; <a href="">Campaign</a>.</p>
+      <p>
+        <a href="https://heroku.com/deploy">
+          <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
+        </a>
+      </p>
+      <p>or try it out this live demo by signing up below</p>
+
+      {% if !confirmed %}
+        <form class="signup-form" ng-submit="submit()">
+          <div class="input-group input-group-md" ng-class="{'has-error': formError}">
+            <input type="email" class="form-control" ng-model="email" ng-disabled="submitted">
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" ng-disabled="submitted">SIGN UP</button>
+            </span>
+          </div>
+          <div class="alert alert-info" role="alert" ng-if="formSuccess">
+            Sweet! Please check your inbox and click on the confirmation link.
+          </div>
+          <div class="alert alert-warning" role="alert" ng-if="formError">
+            {% raw %}{{errorMsg}}{% endraw %}
+          </div>
+        </form>
+      {% endif %}
+
+      <div class="built-with">
+        <p>Node Prelaunch is built with:</p>
+        <div class="row">
+          <div class="col-xs-4 col-md-4">
+            <a href="https://nodejs.org/" class="thumbnail">
+              <img src="/images/nodejs.png" alt="">
+            </a>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <a href="http://www.mailgun.com/" class="thumbnail">
+              <img src="/images/mailgun.png" alt="">
+            </a>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <a href="https://heroku.com/" class="thumbnail">
+              <img src="/images/heroku.png" alt="">
+            </a>
+          </div>
+        </div>
       </div>
 
+      <p><iframe src="https://ghbtns.com/github-btn.html?user=mailgun&repo=node-prelaunch&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe> <iframe src="https://ghbtns.com/github-btn.html?user=mailgun&repo=node-prelaunch&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe> <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/mailgun/node-prelaunch" data-text="Checkout this prelaunch app written in Node.js & powered by @Mail_Gun, @heroku & MongoDB">Tweet</a></p>
+      <p>
+        brought to you by <a href="https://twitter.com/Mail_Gun">@Mail_Gun</a>
+      </p>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     <script src="/javascripts/script.js"></script>
     {% if googleAnalytics %}
       <script>

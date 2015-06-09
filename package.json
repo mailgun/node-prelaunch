@@ -1,21 +1,21 @@
 {
   "name": "node-prelaunch",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server"
   },
   "author": {
     "name": "Eddy Hernandez",
-    "email": "edward.d.hernandez@gmail.com",
-    "url": "http://eddywashere.com"
+    "email": "eddy@mailgun.com",
+    "url": "http://www.mailgun.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/eddywashere/node-prelaunch.git"
+    "url": "git://github.com/mailgun/node-prelaunch.git"
   },
   "bugs": {
-    "url": "https://github.com/eddywashere/node-prelaunch/issues"
+    "url": "https://github.com/mailgun/node-prelaunch/issues"
   },
   "license": "MIT",
   "dependencies": {

@@ -6,7 +6,7 @@ Since the project was initially launched, the following features have been added
 - Responsive transactional HTML email templates from (https://github.com/mailgun/transactional-email-templates)
 - Support for sending bulk email through Mailgun. Great for post launch notifications (it powers this email)
 
-Fork this on Github (https://github.com/eddywashere/node-prelaunch)
+Fork this on Github (https://github.com/mailgun/node-prelaunch)
 
 -- Node Prelaunch App
 
