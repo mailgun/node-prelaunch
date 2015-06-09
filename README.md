@@ -1,4 +1,4 @@
-<a href="https://node-prelaunch.herokuapp.com"><img src="https://cloud.githubusercontent.com/assets/399776/7552344/e4874bf8-f663-11e4-803b-bff9346f5607.png" width="100%" alt="screenshot"></a>
+<a href="https://node-prelaunch.herokuapp.com"><img src="https://cloud.githubusercontent.com/assets/399776/8070534/d1f74496-0eb6-11e5-81b9-b70627d4340b.png" width="100%" alt="screenshot"></a>
 
 # node-prelaunch
 
@@ -11,8 +11,6 @@ Live Demo: [node-prelaunch.herokuapp.com](https://node-prelaunch.herokuapp.com)
 Responsive transactional HTML email templates from [mailgun/transactional-email-templates](https://github.com/mailgun/transactional-email-templates)
 
 Icon from [sketchappsources.com](http://www.sketchappsources.com/free-source/778-flat-rocket-sketch-freebie-resource.html).
-
-HTML/CSS mostly from [twbs/bootstrap](https://github.com/twbs/bootstrap/tree/2084791511182db5cb7c3a2b3d9b35bddabb5eed/docs/examples/cover) cover template.
 
 ### System Requirements
 
