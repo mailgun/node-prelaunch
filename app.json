@@ -3,7 +3,7 @@
   "description": "A prelaunch app to capture early sign ups, written in node.",
   "website": "https://github.com/mailgun/node-prelaunch",
   "repository": "https://github.com/mailgun/node-prelaunch",
-  "logo": "https://raw.githubusercontent.com/mailgun/node-prelaunch/master/public/images/logo.png",
+  "logo": "https://mailgun.github.io/media/Mailgun_Icon.png",
   "keywords": ["mailgun", "email", "prelaunch", "node", "signup", "form"],
   "env": {
     "APP_NAME": {
