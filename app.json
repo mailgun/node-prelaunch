@@ -1,6 +1,6 @@
 {
-  "name": "node-prelaunch",
-  "description": "A prelaunch app to capture early sign ups, written in node.",
+  "name": "Mailgun Node Prelaunch App",
+  "description": "A Mailgun powered landing page to capture early sign ups.",
   "website": "https://github.com/mailgun/node-prelaunch",
   "repository": "https://github.com/mailgun/node-prelaunch",
   "logo": "https://mailgun.github.io/media/Mailgun_Icon.png",
