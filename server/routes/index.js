@@ -66,12 +66,12 @@ router.get('/signup/confirm*', function(req, res, next) {
   function(err){
     if(err) {
       res.render('index', {
-        title: 'Prelaunch App',
+        title: secrets.appName,
         error: "This confirmation token is invalid or has expired."
       });
     } else {
       res.render('index', {
-        title: 'Prelaunch App',
+        title: secrets.appName,
         confirmed: true
       });
     }
