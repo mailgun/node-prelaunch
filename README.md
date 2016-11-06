@@ -77,6 +77,6 @@ Project Goals
 - post launch sending capabilities and integration (ex: send password reset codes when app is launched)
 
 ### Todo
-
+- ** Track unsubscribe events to mark the correspondant emails on MongoDB, not just on Mailgun internal record **
 - add flag to batch command for sending in [testmode](https://documentation.mailgun.com/user_manual.html#sending-in-test-mode)
 - use tags to track transactional emails (`signups` vs `commercial` vs `password resets`)
