@@ -51,9 +51,9 @@ router.get('/signup/confirm*', function(req, res, next) {
     function(user, done){
       if(user){
         var data = {};
-        data.from = 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>';
+        data.from = secrets.appName + ' <' + secrets.mailgun.email + '>';
         data.template = 'verified';
-        data.subject = 'Node Prelaunch: Sign Up Confirmed';
+        data.subject = secrets.appName + ': Sign Up Confirmed';
         data.email = user.email;
 
         sendEmail(data, done);
@@ -106,7 +106,7 @@ router.post('/signup', function(req, res, next) {
     },
     function(user, done){
       var data = {};
-      data.from = 'Node Prelaunch <postmaster@' + secrets.mailgun.domain + '>';
+      data.from = secrets.appName + ' <' + secrets.mailgun.email + '>';
       data.confirmationLink = req.headers.host +
         '/signup/confirm?u=' + user.confirmation.id +
         '&t=' + user.confirmation.token;
@@ -118,7 +118,7 @@ router.post('/signup', function(req, res, next) {
       }
       console.log(data.confirmationLink);
       data.template = 'confirmation';
-      data.subject = 'Node Prelaunch: Confirm Sign Up';
+      data.subject = secrets.appName + ': Confirm Sign Up';
       data.email = user.email;
 
       sendEmail(data, done);
